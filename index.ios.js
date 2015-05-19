@@ -28,7 +28,7 @@ var MovieItem = React.createClass({
     render: function () {
         return (
             <View style={styles.movieItem}>
-                <Image source={{uri: this.props.uri}} style={styles.image} />
+                <Image source={{uri: this.props.uri}} style={styles.image}/>
                 <View style={styles.movieDetail}>
                     <Text style={styles.title}>{this.props.title}</Text>
                     <Text style={styles.year}>{this.props.year}</Text>
@@ -90,6 +90,8 @@ var styles = StyleSheet.create({
     },
     movieItem  : {
         flex          : 1,
+        marginTop     : 10,
+        marginLeft    : 10,
         flexDirection : 'row',
         justifyContent: 'center',
         alignItems    : 'center'
