@@ -4,99 +4,111 @@ var React = require('react-native');
 
 var {
     AppRegistry,
+    Image,
+    ListView,
     StyleSheet,
     Text,
-    View,
-    Image
+    View
     } = React;
 
-var MOCKED_MOVIES_DATA = [
-    {
-        title: '速度与激情7',
-        year : '2015',
-        uri  : 'http://b.hiphotos.baidu.com/video/pic/item/902397dda144ad34112c92e6d5a20cf431ad853b.jpg'
-    },
-    {
-        title: '战狼',
-        year : '2015',
-        uri  : 'http://c.hiphotos.baidu.com/video/pic/item/bf096b63f6246b6015a3aca8eff81a4c500fa2b8.jpg'
-    }
-];
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
+var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
+var PAGE_SIZE = 25;
+var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
+var REQUEST_URL = API_URL + PARAMS;
 
-// MovieItem Component
-var MovieItem = React.createClass({
+var ReactNativeProject = React.createClass({
+    getInitialState: function () {
+        return {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2
+            }),
+            loaded    : false
+        };
+    },
+
+    componentDidMount: function () {
+        this.fetchData();
+    },
+
+    fetchData: function () {
+        fetch(REQUEST_URL)
+            .then((response) => {
+                console.log(response);
+                return response.json()
+            })
+            .then((responseData) => {
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+                    loaded    : true
+                });
+            })
+            .done();
+    },
+
     render: function () {
+        if (!this.state.loaded) {
+            return this.renderLoadingView();
+        }
+
         return (
-            <View style={styles.movieItem}>
-                <Image source={{uri: this.props.uri}} style={styles.image}/>
-                <View style={styles.movieDetail}>
-                    <Text style={styles.title}>{this.props.title}</Text>
-                    <Text style={styles.year}>{this.props.year}</Text>
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderMovie}
+                style={styles.listView}/>
+        );
+    },
+
+    renderLoadingView: function () {
+        return (
+            <View style={styles.container}>
+                <Text>
+                    Loading movies...
+                </Text>
+            </View>
+        );
+    },
+
+    renderMovie: function (movie) {
+        return (
+            <View style={styles.container}>
+                <Image source={{uri: movie.posters.thumbnail}} style={styles.thumbnail}/>
+                <View style={styles.rightContainer}>
+                    <Text style={styles.title}>{movie.title}</Text>
+                    <Text style={styles.year}>{movie.year}</Text>
                 </View>
             </View>
         );
     }
 });
 
-// MovieList Component
-var MovieList = React.createClass({
-    render: function () {
-        var movies = MOCKED_MOVIES_DATA.map(function (movie, index) {
-            return (
-                <MovieItem key={index} {...movie}></MovieItem>
-            );
-        });
-
-        return (
-            <View>
-                {movies}
-            </View>
-        );
-    }
-});
-
-// ReactNativeProject Component
-var ReactNativeProject = React.createClass({
-    render: function () {
-        return (
-            <View style={styles.container}>
-                <MovieList></MovieList>
-            </View>
-        );
-    }
-});
-
 var styles = StyleSheet.create({
-    container  : {
+    container     : {
         flex           : 1,
-        marginTop      : 20,
-        flexDirection  : 'column',
+        flexDirection  : 'row',
+        justifyContent : 'center',
+        alignItems     : 'center',
         backgroundColor: '#F5FCFF'
     },
-    title      : {
-        fontSize    : 20,
-        textAlign   : 'center',
-        marginBottom: 8
-    },
-    year       : {
-        textAlign: 'center'
-    },
-    image      : {
-        width : 64,
-        height: 64
-    },
-    movieDetail: {
+    rightContainer: {
         flex: 1
     },
-    movieItem  : {
-        flex          : 1,
-        marginTop     : 10,
-        marginLeft    : 10,
-        flexDirection : 'row',
-        justifyContent: 'center',
-        alignItems    : 'center'
+    title         : {
+        fontSize    : 20,
+        marginBottom: 8,
+        textAlign   : 'center'
+    },
+    year          : {
+        textAlign: 'center'
+    },
+    thumbnail     : {
+        width : 53,
+        height: 81
+    },
+    listView      : {
+        paddingTop     : 20,
+        backgroundColor: '#F5FCFF'
     }
-
 });
 
 AppRegistry.registerComponent('ReactNativeProject', () => ReactNativeProject);
