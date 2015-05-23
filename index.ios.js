@@ -155,6 +155,11 @@ var MyPage = React.createClass({
                     <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} renderHeader={() => <Text>作者列表</Text>}/>
                 </View>
 
+                <View style={style.row}>
+                    <Text>MapView : </Text>
+                    <MapView style={style.map}/>
+                </View>
+
             </View>
         );
     },
@@ -196,10 +201,17 @@ var style = StyleSheet.create({
         width : 128,
         height: 128
     },
+    map      : {
+        width      : 128,
+        height     : 128,
+        margin     : 10,
+        borderWidth: 1,
+        borderColor: '#000000',
+    },
     loading  : {}
 });
 
-var {ActivityIndicatorIOS,DatePickerIOS} = React;
+var {ActivityIndicatorIOS,DatePickerIOS,MapView} = React;
 
 /// My WorkSpace End
 
