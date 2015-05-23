@@ -140,6 +140,11 @@ var MyPage = React.createClass({
                     <DatePickerIOS date={this.state.date} mode="datetime" onDateChange={this.onDateChange}/>
                 </View>
 
+                <View style={style.row}>
+                    <Text>Image : </Text>
+                    <Image style={style.image} resizeMode="contain" source={{uri:'http://b271.photo.store.qq.com/psb?/931a977e-ea20-42a2-9b12-b36820c5a300/8aeHF4qcjQ24SuInOSrNpQkLfgXDfKbiCeGort8O8gc!/b/dDEllaE4HQAA&bo=gAJpBAAAAAAKB8Q!&rf=viewer_4'}}/>
+                </View>
+
             </View>
         );
     },
@@ -170,6 +175,10 @@ var style = StyleSheet.create({
         fontSize  : 30,
         textAlign : 'center',
         paddingTop: 20
+    },
+    image    : {
+        width : 128,
+        height: 128
     },
     loading  : {}
 });
