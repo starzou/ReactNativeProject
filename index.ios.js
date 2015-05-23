@@ -117,6 +117,13 @@ var styles = StyleSheet.create({
  * MyPage Component
  */
 var MyPage = React.createClass({
+
+    getInitialState: function () {
+        return {
+            date: new Date()
+        };
+    },
+
     render: function () {
         return (
             <View style={style.container}>
@@ -128,8 +135,21 @@ var MyPage = React.createClass({
                     <ActivityIndicatorIOS style={style.loading} animating={true} size="large" color="green"/>
                 </View>
 
+                <View style={style.column}>
+                    <Text>DatePickerIOS : </Text>
+                    <DatePickerIOS date={this.state.date} mode="datetime" onDateChange={this.onDateChange}/>
+                </View>
+
             </View>
         );
+    },
+
+    componentDidMount: function () {
+        console.log(this);
+    },
+
+    onDateChange: function (date) {
+        console.log(date);
     }
 });
 
@@ -154,7 +174,7 @@ var style = StyleSheet.create({
     loading  : {}
 });
 
-var {ActivityIndicatorIOS} = React;
+var {ActivityIndicatorIOS,DatePickerIOS} = React;
 
 /// My WorkSpace End
 
