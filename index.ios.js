@@ -152,7 +152,7 @@ var MyPage = React.createClass({
 
                 <View style={style.row}>
                     <Text>ListView : </Text>
-                    <ListView dataSource={this.state.dataSource} renderRow={this.renderRow}/>
+                    <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} renderHeader={() => <Text>作者列表</Text>}/>
                 </View>
 
             </View>
