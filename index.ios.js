@@ -119,8 +119,13 @@ var styles = StyleSheet.create({
 var MyPage = React.createClass({
 
     getInitialState: function () {
+        var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+        var anchor = [{name: 'Star Zou'}, {name: 'tj'}, {name: 'scot'}];
+
         return {
-            date: new Date()
+            date      : new Date(),
+            dataSource: dataSource.cloneWithRows(anchor)
         };
     },
 
@@ -145,6 +150,11 @@ var MyPage = React.createClass({
                     <Image style={style.image} resizeMode="contain" source={{uri:'http://b271.photo.store.qq.com/psb?/931a977e-ea20-42a2-9b12-b36820c5a300/8aeHF4qcjQ24SuInOSrNpQkLfgXDfKbiCeGort8O8gc!/b/dDEllaE4HQAA&bo=gAJpBAAAAAAKB8Q!&rf=viewer_4'}}/>
                 </View>
 
+                <View style={style.row}>
+                    <Text>ListView : </Text>
+                    <ListView dataSource={this.state.dataSource} renderRow={this.renderRow}/>
+                </View>
+
             </View>
         );
     },
@@ -155,6 +165,12 @@ var MyPage = React.createClass({
 
     onDateChange: function (date) {
         console.log(date);
+    },
+
+    renderRow: function (data) {
+        return (
+            <Text>{data.name}</Text>
+        );
     }
 });
 
