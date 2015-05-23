@@ -111,4 +111,26 @@ var styles = StyleSheet.create({
     }
 });
 
-AppRegistry.registerComponent('ReactNativeProject', () => ReactNativeProject);
+/// My WorkSpace Start
+
+/**
+ * MyPage Component
+ */
+var MyPage = React.createClass({
+    render: function () {
+        return (
+            <View style={styles.container}>
+                <Text>Hello World!</Text>
+                <View>
+                    <ActivityIndicatorIOS style={styles.loading} animating={true} size="large" color="green"/>
+                </View>
+            </View>
+        );
+    }
+});
+
+var {ActivityIndicatorIOS} = React;
+
+/// My WorkSpace End
+
+AppRegistry.registerComponent('ReactNativeProject', () => MyPage);
