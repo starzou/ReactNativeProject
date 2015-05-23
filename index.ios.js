@@ -119,14 +119,39 @@ var styles = StyleSheet.create({
 var MyPage = React.createClass({
     render: function () {
         return (
-            <View style={styles.container}>
-                <Text>Hello World!</Text>
-                <View>
-                    <ActivityIndicatorIOS style={styles.loading} animating={true} size="large" color="green"/>
+            <View style={style.container}>
+
+                <Text style={style.title}>React Native 研究</Text>
+
+                <View style={style.row}>
+                    <Text>ActivityIndicatorIOS : </Text>
+                    <ActivityIndicatorIOS style={style.loading} animating={true} size="large" color="green"/>
                 </View>
+
             </View>
         );
     }
+});
+
+var style = StyleSheet.create({
+    container: {
+        flex           : 1,
+        backgroundColor: '#F5FCFF'
+    },
+    column   : {
+        flexDirection: 'column'
+    },
+    row      : {
+        flexDirection : 'row',
+        justifyContent: 'space-around',
+        alignItems    : 'center'
+    },
+    title    : {
+        fontSize  : 30,
+        textAlign : 'center',
+        paddingTop: 20
+    },
+    loading  : {}
 });
 
 var {ActivityIndicatorIOS} = React;
